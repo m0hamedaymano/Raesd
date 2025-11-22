@@ -1,0 +1,6 @@
+@Raesd_HostAddress = http://localhost:5238
+
+GET {{Raesd_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
