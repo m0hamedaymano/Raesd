@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using Rased.Persistence.IdentityData.DbContext;
+
 namespace Raesd
 {
     public class Program
@@ -13,6 +16,11 @@ namespace Raesd
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<RasedIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+            });
 
             var app = builder.Build();
 
