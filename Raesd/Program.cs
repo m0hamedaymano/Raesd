@@ -1,12 +1,19 @@
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Raesd.Web.Extentions;
+using Rased.Domain.Entitys.IdentityModule;
+using Rased.Domain.Interfaces;
+using Rased.Persistence.IdentityData.DataSeed;
 using Rased.Persistence.IdentityData.DbContext;
+using System.Threading.Tasks;
 
 namespace Raesd
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +29,20 @@ namespace Raesd
                 options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
             });
 
+            builder.Services.AddKeyedScoped<IDataIntializer, IdentityDataIntializer>("Identity");
+          
+
+            builder.Services.AddIdentityCore<ApplicationUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<RasedIdentityDbContext>();
+
+
+
             var app = builder.Build();
+            #region DataSeeding - Apply Pending Migration
+            //await app.MigrateDatabaseAsync();
+            await app.SeedIdentityDatabaseAsync();
+            #endregion
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
