@@ -51,8 +51,9 @@ namespace Rased.Persistence.IdentityData.DataSeed
                 }
             }
             catch (Exception ex)
-            {
-                Logger.LogError($"Error While Seeding Identity DataBase : Masage = {ex.Message}");
+            {             
+                _logger.LogError($"Error While Seeding Identity DataBase : Message = {ex.Message}");
+
             }
         }
     }
