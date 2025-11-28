@@ -46,7 +46,7 @@ namespace Rased.Persistence.IdentityData.DataSeed
                   
                     await _userManager.CreateAsync(user, "Admin");
 
-                    await _userManager.AddToRoleAsync(user, "Admin");
+                    //await _userManager.AddToRoleAsync(user, "Admin");
                     await _userManager.AddToRoleAsync(user, "SuperAdmin");
                 }
             }
