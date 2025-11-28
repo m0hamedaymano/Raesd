@@ -8,7 +8,7 @@ namespace Raesd.Web.Extentions
     {
         public static WebApplication MigrateDatabase(this WebApplication app)
         {
-            await using var scope = app.Services.CreateAsyncScope();
+            using var scope = app.Services.CreateScope();
             var DbContextService = scope.ServiceProvider.GetRequiredService<RasedIdentityDbContext>();
             if (DbContextService.Database.GetPendingMigrations().Any())
             {
