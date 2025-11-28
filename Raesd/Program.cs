@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,13 +31,13 @@ namespace Raesd
             });
 
             builder.Services.AddKeyedScoped<IDataIntializer, IdentityDataIntializer>("Identity");
-          
+
 
             builder.Services.AddIdentityCore<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<RasedIdentityDbContext>();
 
-
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             var app = builder.Build();
             #region DataSeeding - Apply Pending Migration
