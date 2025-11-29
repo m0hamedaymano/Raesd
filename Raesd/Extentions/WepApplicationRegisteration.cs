@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rased.Domain.Interfaces;
 using Rased.Persistence.IdentityData.DbContext;
+using System.Threading.Tasks;
 
 namespace Raesd.Web.Extentions
 {
     public static class WepApplicationRegisteration
     {
-        public static WebApplication MigrateDatabase(this WebApplication app)
+        public static async Task<WebApplication> MigrateDatabase(this WebApplication app)
         {
-            using var scope = app.Services.CreateScope();
+            await using var scope = app.Services.CreateAsyncScope();
             var DbContextService = scope.ServiceProvider.GetRequiredService<RasedIdentityDbContext>();
             if (DbContextService.Database.GetPendingMigrations().Any())
             {
